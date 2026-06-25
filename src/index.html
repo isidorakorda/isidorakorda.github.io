@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Isidora Korda | Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <div class="portfolio-wrapper">
+
+    <div class="tabs-container">
+      <button class="tab-link" onclick="loadContent('projects', this)">Projects</button>
+      <button class="tab-link" onclick="loadContent('skills', this)">Skills</button>
+      <button class="tab-link" onclick="loadContent('education', this)">Education</button>
+    </div>
+
+    <div class="main-container">
+
+      <aside class="left-column">
+        <div class="avatar-placeholder">
+          <img class="profile-pic" src="./assets/profile-pic.jpg" alt="Profile Picture">
+        </div>
+        <div class="profile-text">
+          <h1>Isidora Korda</h1>
+          <p>Software Engineering Student — 3<sup>rd</sup> year<br>FTN, Novi Sad</p>
+        </div>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span>Email</span>
+            <span>kordaisidora05@gmail.com</span>
+          </div>
+          <div class="contact-item">
+            <span>LinkedIn</span>
+            <a href="https://linkedin.com/in/isidora-korda" target="_blank">linkedin.com/in/isidora-korda</a>
+          </div>
+          <div class="contact-item">
+            <span>GitHub</span>
+            <a href="https://github.com/isidorakorda" target="_blank">github.com/isidorakorda</a>
+          </div>
+          <div class="contact-item">
+            <span>Phone</span>
+            <span>(+381) 64 127 3718</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="right-column">
+        <div id="content-container" class="content-panel"></div>
+      </main>
+
+    </div>
+  </div>
+
+  <script>
+    async function loadContent(page, btn) {
+      const panel = document.getElementById('content-container');
+
+      try {
+        const response = await fetch(`components/${page}.html`);
+        const content = await response.text();
+        panel.innerHTML = content;
+      } catch {
+        panel.textContent = 'Failed to load content.';
+      }
+
+      panel.classList.remove('fade');
+      void panel.offsetWidth;
+      panel.classList.add('fade');
+
+      document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    window.onload = () => {
+      loadContent('projects', document.querySelector('.tab-link'));
+    };
+  </script>
+
+</body>
+
+</html>
